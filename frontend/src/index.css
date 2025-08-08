@@ -1,0 +1,43 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #f8f9fc 0%, #f3f0ff 100%);
+  color: #222;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+a {
+  color: #8e24aa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #6d1b7b;
+  text-decoration: underline;
+}
+
+input, button, label {
+  font-family: inherit;
+}
+
+button {
+  transition: background 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #f3f0ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e1bee7;
+  border-radius: 4px;
+}

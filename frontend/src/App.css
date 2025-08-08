@@ -1,0 +1,92 @@
+/* Center content vertically and horizontally */
+body, #root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card styles for forms */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(80, 80, 120, 0.08);
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+}
+
+/* Form input styles */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+button {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  background: #8e24aa;
+  color: #fff;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #6d1b7b;
+}
+
+label {
+  font-size: 14px;
+  color: #444;
+}
+
+.form-link {
+  color: #8e24aa;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+  color: #6d1b7b;
+}
+
+/* Social buttons */
+.social-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-right: 8px;
+}
+
+.social-btn:last-child {
+  margin-right: 0;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .card {
+    padding: 16px;
+    border-radius: 8px;
+  }
+}
