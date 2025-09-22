@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [form, setForm] = useState({
@@ -10,6 +11,7 @@ const Signup = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -28,19 +30,23 @@ const Signup = () => {
             setError('You must agree to the Terms of Service and Privacy Policy');
             return;
         }
-        try {
-            // Example: await signupApi(form);
-            setSuccess('Signup successful!');
-            setForm({
-                username: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                agree: false,
-            });
-        } catch (err) {
-            setError('Signup failed. Please try again.');
+        // Store user credentials in localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '{}');
+        if (users[form.email]){
+            setError('User already exist');
+            return;
         }
+
+        users[form.email] = {
+            username: form.username,
+            email: form.email,
+            password: form.password,
+        };
+        localStorage.setItem('users', JSON.stringify(users));
+        setSuccess('Signup successful!');
+        setTimeout(() => {
+            navigate('/information', {state: {email: form.email}});
+        }, 1000);
     };
 
     return (
@@ -52,10 +58,8 @@ const Signup = () => {
             alignItems: 'center',
             justifyContent: 'center'
         }}>
-            <div style={{
-                textAlign: 'center'
-            }}>
-                <div style={{ color: '#8e24aa', fontWeight: 700, fontSize: 30, marginBottom: 4 ,marginTop:8}}>XGen-Ed</div>
+            <div style={{ textAlign: 'center' }}>
+                <div style={{ color: '#8e24aa', fontWeight: 700, fontSize: 30, marginBottom: 4, marginTop: 8 }}>XGen-Ed</div>
                 <div style={{ color: '#555', marginBottom: 14 }}>Start your learning journey today</div>
                 <h2 style={{ marginBottom: 0 }}>Create Account</h2>
                 <div style={{ color: '#888', fontSize: 14, marginBottom: 12 }}>
@@ -96,7 +100,7 @@ const Signup = () => {
                             style={{ width: '100%', padding: 10, marginTop: 4, borderRadius: 6, border: '1px solid #ddd' }}
                         />
                     </div>
-                    <div style={{ marginBottom: 12, fontWeight: 600  }}>
+                    <div style={{ marginBottom: 12, fontWeight: 600 }}>
                         <label>Password</label>
                         <input
                             type="password"
@@ -108,7 +112,7 @@ const Signup = () => {
                             style={{ width: '100%', padding: 10, marginTop: 4, borderRadius: 6, border: '1px solid #ddd' }}
                         />
                     </div>
-                    <div style={{ marginBottom: 12, fontWeight: 600  }}>
+                    <div style={{ marginBottom: 12, fontWeight: 600 }}>
                         <label>Confirm Password</label>
                         <input
                             type="password"
@@ -151,7 +155,7 @@ const Signup = () => {
                     >
                         Create Account
                     </button>
-                </form>        
+                </form>
                 <div style={{ fontSize: 14 }}>
                     Already have an account? <a href="/login" style={{ color: '#8e24aa' }}>Sign in here</a>
                 </div>
@@ -161,18 +165,19 @@ const Signup = () => {
                 color: '#555',
                 fontSize: 12.5,
                 textAlign: 'center',
-                marginBottom:0,
+                marginBottom: 0,
             }}>
                 <div>Join XGen-Ed and unlock:</div>
-                <div style={{ display: 'grid',
+                <div style={{
+                    display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
                     gap: '8px',
                     justifyContent: 'center',
                     marginTop: 12,
                     maxWidth: 350,
                     marginLeft: 'auto',
-                    marginRight: 'auto' 
-                    }}>
+                    marginRight: 'auto'
+                }}>
                     <span>📝 Resume Builder</span>
                     <span>📊 CGPA Tracking</span>
                     <span>💼 Profile Management</span>

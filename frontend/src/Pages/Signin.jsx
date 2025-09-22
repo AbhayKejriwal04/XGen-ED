@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
     const [form, setForm] = useState({
-        username: '',
+        email: '',
         password: '',
         remember: false,
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -18,21 +20,25 @@ const Signin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!form.username || !form.password) {
-            setError('Please enter both username and password');
+        if (!form.email || !form.password) {
+            setError('Please enter both email and password');
             return;
         }
-        try {
-            // Example: await signinApi(form);
-            setSuccess('Sign in successful!');
-            setForm({
-                username: '',
-                password: '',
-                remember: false,
-            });
-        } catch (err) {
-            setError('Sign in failed. Please try again.');
+        const users = JSON.parse(localStorage.getItem('users') || '{}');
+        const user = users[form.email];
+        if (!user || user.password !== form.password) {
+            setError('Invalid email or password');
+            return;
         }
+        setSuccess('Sign in successful!');
+        setForm({
+            email: '',
+            password: '',
+            remember: false,
+        });
+        setTimeout(() => {
+            navigate('/profile', { state: { email: form.email } });
+        }, 1000);
     };
 
     return (
@@ -45,10 +51,8 @@ const Signin = () => {
             alignItems: 'center',
             justifyContent: 'center'
         }}>
-            <div style={{
-                textAlign: 'center'
-            }}>
-                <div style={{ color: '#8e24aa', fontWeight: 700, fontSize: 30, marginBottom: 0 ,marginTop: 8}}>XGen-Ed</div>
+            <div style={{ textAlign: 'center' }}>
+                <div style={{ color: '#8e24aa', fontWeight: 700, fontSize: 30, marginBottom: 0, marginTop: 8 }}>XGen-Ed</div>
                 <div style={{ color: '#555', marginBottom: 14 }}>Your Learning Management System</div>
                 <h2 style={{ marginBottom: 0 }}>Welcome Back</h2>
                 <div style={{ color: '#888', fontSize: 14, marginBottom: 12 }}>
@@ -64,17 +68,17 @@ const Signin = () => {
                 boxShadow: '0 4px 24px rgba(0, 0, 0, 0.65)',
                 textAlign: 'center'
             }}>
-                
+
                 <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
                     <div style={{ marginBottom: 12, fontWeight: 600 }}>
-                        <label>Username</label>
+                        <label>Email Address</label>
                         <input
-                            type="text"
-                            name="username"
-                            value={form.username}
+                            type="email"
+                            name="email"
+                            value={form.email}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your username"
+                            placeholder="Enter your email"
                             style={{ width: '100%', padding: 10, marginTop: 4, borderRadius: 6, border: '1px solid #ddd' }}
                         />
                     </div>
@@ -132,7 +136,7 @@ const Signin = () => {
                 color: '#555',
                 fontSize: 12.5,
                 textAlign: 'center',
-                marginBottom:0,
+                marginBottom: 0,
             }}>
                 <div>What you'll get with XGen-Ed:</div>
                 <div style={{

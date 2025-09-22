@@ -40,7 +40,7 @@ button {
   background: #8e24aa;
   color: #fff;
   margin-bottom: 16px;
-  transition: background 0.2s;
+  transition: 0.2s;
 }
 
 button:hover {
@@ -89,4 +89,24 @@ label {
     padding: 16px;
     border-radius: 8px;
   }
+}
+
+/* Card hover */
+.card-cgpa:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(15,15,30,0.08);
+}
+.calculator-section { border-radius: 12px; padding: 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+
+/* responsive */
+@media (max-width: 900px) {
+  .cgpa-grid { grid-template-columns: 1fr; }
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .cgpa-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .cgpa-grid { grid-template-columns: 1fr; }
 }
